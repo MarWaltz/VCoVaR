@@ -1,7 +1,6 @@
 
 # setup (loads VaR_violations.R, univariate_model_definition.R and functions.R)
 source("C:/Users/MWaltz/Desktop/Forschung/CoVaR/Code/Empirical Study/setup.R")
-rm(res)
 
 
 #------------------------- Copula: Bivariate static est ------------------------
@@ -124,10 +123,10 @@ rownames(cop_tbl2) = c("omega_theta", "beta_theta", "c_theta", "v", "AIC_Pat",
 
 #------------------ Copula: Multivariate static estimation ---------------------
 
-get_cop_est_AIC_higherD(fits_CC, copula = "normal")
-get_cop_est_AIC_higherD(fits_CC, copula = "t")
-get_cop_est_AIC_higherD(fits_CC, copula = "clayton")
-get_cop_est_AIC_higherD(fits_CC, copula = "gumbel")
+h1 = get_cop_est_AIC_higherD(fits_CC, copula = "normal")
+h2 = get_cop_est_AIC_higherD(fits_CC, copula = "t")
+h3 = get_cop_est_AIC_higherD(fits_CC, copula = "clayton")
+h4 = get_cop_est_AIC_higherD(fits_CC, copula = "gumbel")
 
 
 #--------------------- Copula: Multivariate DCC-t-copula -----------------------

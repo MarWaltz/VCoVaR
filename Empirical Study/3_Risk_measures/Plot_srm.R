@@ -1,12 +1,25 @@
 
 # execute Rel_exc.R
-source("C:/Users/MWaltz/Desktop/Forschung/CoVaR/Code/Empirical Study/Rel_exc.R")
+#source("C:/Users/MWaltz/Desktop/Forschung/CoVaR/Code/Empirical Study/Rel_exc.R")
 
+ylim = list("BTC" = c(-1.25, 0.2),
+            "ETH" = c(-1.65, 0.35),
+            "LTC" = c(-1.2, 0.6),
+            "XMR" = c(-1.3, 0.6),
+            "XRP" = c(-1.5, 0.6))
+
+points = list("BTC" = c(-0.7, -0.9, -1.1),
+              "ETH" = c(-1.1, -1.3, -1.5),
+              "LTC" = c(-0.7, -0.9, -1.1),
+              "XMR" = c(-0.8, -1.0, -1.2),
+              "XRP" = c(-0.9, -1.1, -1.3))
 
 #-------------------------- Plot: Bivariate CoVaR ------------------------------
 
-plot_BivCoVaR = function(ts1, ts2, name1, name2, VaR1, VaR2, CoVaR, main = T,
+plot_BivCoVaR = function(ts1, ts2, name1, name2, VaR1, VaR2, CoVaR, main = F,
                          width = 12, height = 7){
+  # setup
+  par(cex.axis = 1.25, cex.lab = 1.25)
   
   # init pdf
   pdf(file = paste("BivCoVaR_", name1, "_", name2, ".pdf", sep = ""),
@@ -29,43 +42,44 @@ plot_BivCoVaR = function(ts1, ts2, name1, name2, VaR1, VaR2, CoVaR, main = T,
     main = paste("CoVaR of ", name1, "|", name2,  "- Realized violation rate: ", 
                  CoVaR_eval$rate, sep = "")
   }else{
-    main = F
+    main = ""
   }
 
   plot.ts(cbind(ts1, VaR1, CoVaR), plot.type = "single", col = c("blue3", "red3", "green3"),
-          main = main, ylim = c(-1.2, 0.25), ylab = "log-returns", xaxt = "n")
+          main = main, ylim = ylim[[name1]], ylab = "log-returns", xaxt = "n", lwd = 2)
   
   # add axis
   axis(1, at = year_idx, labels = year)
   
   # cases, when ts1 <= VaR1
-  points(VaR1_eval$exc, rep(-0.7, length(VaR1_eval$exc)), pch = 4)
+  points(VaR1_eval$exc, rep(points[[name1]][1], length(VaR1_eval$exc)), pch = 4)
   
   # cases, when condition is fulfilled (ts2 <= VaR2)
-  points(VaR2_eval$exc, rep(-0.9, length(VaR2_eval$exc)), pch = 4)
+  points(VaR2_eval$exc, rep(points[[name1]][2], length(VaR2_eval$exc)), pch = 4)
   
   # exceedences given the fulfilled condition
-  points(CoVaR_eval$CoVaR_exc, rep(-1.1, length(CoVaR_eval$CoVaR_exc)), pch = 4)
+  points(CoVaR_eval$CoVaR_exc, rep(points[[name1]][3], length(CoVaR_eval$CoVaR_exc)), pch = 4)
   
   # legend and info
   legend = c(paste("log-return of", name1), paste("5% VaR of", name1), "5% CoVaR")
-  legend("bottom", horiz = TRUE, legend = legend, 
+  legend("bottom", horiz = TRUE, legend = legend,
          fill = c("blue3", "red3", "green3"), bty = "n")
   
-  text(200, -0.65, bquote(.(name1)<=VaR(.(name1))~":"), pos = 4, cex = 1)
-  text(200, -0.85, bquote(.(name2)<=VaR(.(name2))~":"), pos = 4, cex = 1)
-  text(200, -1.05, bquote(.(name1)<=CoVaR~"|"~.(name2)<=VaR(.(name2))~":"), 
-       pos = 4, cex = 1)
+  text(200, points[[name1]][1] + 0.05, bquote(.(name1)<=VaR(.(name1))~":"), pos = 4, cex = 1.05)
+  text(200, points[[name1]][2] + 0.05, bquote(.(name2)<=VaR(.(name2))~":"), pos = 4, cex = 1.05)
+  text(200, points[[name1]][3] + 0.05, bquote(.(name1)<=CoVaR~"|"~.(name2)<=VaR(.(name2))~":"), 
+       pos = 4, cex = 1.05)
   
   # close file
   dev.off()
 }
 
 # get relevant combs
-combs_rel = combs[startsWith(combs, "BTC")]
+#combs_rel = combs[startsWith(combs, "BTC")]
+combs_rel = combs
 
 for(comb in combs_rel){
-  
+
   # which CCs
   cryptos = strsplit(comb, split = "-")[[1]]
   CC1 = cryptos[1]
@@ -91,7 +105,13 @@ for(comb in combs_rel){
 
 #------------------------- Plot: SCoVaR|MCoVaR|VCoVaR --------------------------
 
-plot_VSM_CoVaR = function(name_Y, main = T, width = 12, height = 7){
+ylim_VSM = list("BTC" = c(-3.175, 0.2),
+                "ETH" = c(-3.175, 0.3),
+                "LTC" = c(-3.175, 0.5),
+                "XMR" = c(-3.175, 0.6),
+                "XRP" = c(-3.175, 0.7))
+
+plot_VSM_CoVaR = function(name_Y, main = F, width = 12, height = 7){
   
   # get information
   ts_Y   = ts[[name_Y]]
@@ -103,6 +123,9 @@ plot_VSM_CoVaR = function(name_Y, main = T, width = 12, height = 7){
   ts_X  = ts_CC[-which(names(ts_CC) == name_Y)]
   VaR_X = VaR_CC[-which(names(VaR_CC) == name_Y)]
 
+  # setup
+  par(cex.axis = 1.25, cex.lab = 1.25)
+  
   # init pdf
   pdf(file = paste("VSM_CoVaR_", name_Y, ".pdf", sep = ""),
       width = width, height = height)
@@ -133,7 +156,7 @@ plot_VSM_CoVaR = function(name_Y, main = T, width = 12, height = 7){
   if(main){
     main = paste("VCoVaR, SCoVaR, MCoVaR of", name_Y)
   }else{
-    main = F
+    main = ""
   }
   
   col   = c("blue3", "red3", rgb(0, 0.675, 0), "darkgreen", "skyblue4")
@@ -143,8 +166,8 @@ plot_VSM_CoVaR = function(name_Y, main = T, width = 12, height = 7){
   
   # create plot
   plot.ts(cbind(ts_Y, VaR_Y, VCoVaR, SCoVaR, MCoVaR), plot.type = "single", 
-          col = col, main = main, ylim = c(-3.15, 0.225), ylab = "log-returns", 
-          xaxt = "n")
+          col = col, main = main, ylim = ylim_VSM[[name_Y]], ylab = "log-returns", 
+          xaxt = "n", lwd = 1.5)
  
   # add axis
   axis(1, at = year_idx, labels = year)
@@ -202,3 +225,7 @@ plot_VSM_CoVaR = function(name_Y, main = T, width = 12, height = 7){
 }
 
 plot_VSM_CoVaR(name_Y = "BTC")
+plot_VSM_CoVaR(name_Y = "ETH")
+plot_VSM_CoVaR(name_Y = "LTC")
+plot_VSM_CoVaR(name_Y = "XMR")
+plot_VSM_CoVaR(name_Y = "XRP")

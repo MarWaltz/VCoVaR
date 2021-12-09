@@ -24,7 +24,7 @@ OOS_VaRs_eval = list()
 
 for(name in names(ts)){
   OOS_VaRs_eval[[name]] = eval_VaR(ts = ts[[name]][-c(1:window.length)],
-                                   VaR = OOS_VaRs[[name]])
+                                   VaR = OOS_VaRs[[name]])$rate
 }
 
 
@@ -57,19 +57,19 @@ for(comb in combs){
     switch(cop,
            
            "normal" = {
-             Biv_CoVaRs_n[[comb]] = CoVaR
+             Biv_OOS_CoVaRs_n[[comb]] = CoVaR
            },
            
            "t" = {
-             Biv_CoVaRs_t[[comb]] = CoVaR
+             Biv_OOS_CoVaRs_t[[comb]] = CoVaR
            },
            
            "clayton" = {
-             Biv_CoVaRs_c[[comb]] = CoVaR
+             Biv_OOS_CoVaRs_c[[comb]] = CoVaR
            },
            
            "gumbel" = {
-             Biv_CoVaRs_g[[comb]] = CoVaR
+             Biv_OOS_CoVaRs_g[[comb]] = CoVaR
            },
     )
   }

@@ -11,7 +11,7 @@ stats = function(ts){
                  "Mean"   = mean(ts),
                  "Median" = median(ts),
                  "Max"    = max(ts),
-                 "Sd"     = sd(vec)), 4))
+                 "Sd"     = sd(ts)), 4))
 }
 
 

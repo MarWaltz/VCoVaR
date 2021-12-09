@@ -4,7 +4,7 @@
 library("rugarch")
 
 # univariate model definition
-source("C:/Users/MWaltz/Desktop/Forschung/CoVaR/Code/Empirical Study/1_Margin_models/Univariate_model_definition.R")
+#source("C:/Users/MWaltz/Desktop/Forschung/CoVaR/Code/Empirical Study/1_Margin_models/Univariate_model_definition.R")
 
 # get standardized residuals
 resBTC = as.vector(residuals(fitrBTC, standardize = T))
@@ -20,36 +20,32 @@ resSysLTC = as.vector(residuals(fitrSysLTC, standardize = T))
 resSysXMR = as.vector(residuals(fitrSysXMR, standardize = T))
 resSysXRP = as.vector(residuals(fitrSysXRP, standardize = T))
 
+create_acf_pacf_plot = function(res, name){
+  
+  # create file
+  pdf(file =  paste(name, "_pacf_acf.pdf", sep = ""), width = 10, height = 6)
+  
+  # fill it
+  par(mfrow = c(2,1), mai = c(0.8, 0.82, 0.3, 0.42))
+  acf(res, main = "")
+  pacf(res, main = "")
+  
+  # close
+  dev.off()
+}
+
 
 #----------------------------- ACF/PACF PLOTS -----------------------------
-acf(resBTC, main = "ACF - BTC")
-pacf(resBTC, main = "PACF - BTC")
 
-acf(resETH, main = "ACF - ETH")
-pacf(resETH, main = "PACF - ETH")
-
-acf(resLTC, main = "ACF - LTC")
-pacf(resLTC, main = "PACF - LTC")
-
-acf(resXMR, main = "ACF - XMR")
-pacf(resXMR, main = "PACF - XMR")
-
-acf(resXRP, main = "ACF - XRP")
-pacf(resXRP, main = "PACF - XRP")
+create_acf_pacf_plot(resBTC, "BTC")
+create_acf_pacf_plot(resETH, "ETH")
+create_acf_pacf_plot(resLTC, "LTC")
+create_acf_pacf_plot(resXMR, "XMR")
+create_acf_pacf_plot(resXRP, "XRP")
 
 
-#-------------------------------- System ----------------------------------
-acf(resSysBTC, main = "ACF - SysBTC")
-pacf(resSysBTC, main = "PACF - SysBTC")
-
-acf(resSysETH, main = "ACF - SysETH")
-pacf(resSysETH, main = "PACF - SysETH")
-
-acf(resSysLTC, main = "ACF - SysLTC")
-pacf(resSysLTC, main = "PACF - SysLTC")
-
-acf(resSysXMR, main = "ACF - SysXMR")
-pacf(resSysXMR, main = "PACF - SysXMR")
-
-acf(resSysXRP, main = "ACF - SysXRP")
-pacf(resSysXRP, main = "PACF - SysXRP")
+create_acf_pacf_plot(resSysBTC, "SysBTC")
+create_acf_pacf_plot(resSysETH, "SysETH")
+create_acf_pacf_plot(resSysLTC, "SysLTC")
+create_acf_pacf_plot(resSysXMR, "SysXMR")
+create_acf_pacf_plot(resSysXRP, "SysXRP")

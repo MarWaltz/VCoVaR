@@ -8,7 +8,7 @@ library("WeightedPortTest")
 source("C:/Users/MWaltz/Desktop/Forschung/CoVaR/Code/Empirical Study/0_Log_returns/Data_loading.R")
 
 
-getAllARMA = function(ret, ar.max = 6, ma.max = 6){
+getAllARMA = function(ret, ar.max = 3, ma.max = 3){
   table = expand.grid(0:ar.max, 0:ma.max, 0:1)
   extraCols = 3
   for(i in seq_len(extraCols)){
@@ -48,7 +48,7 @@ getAllARMA = function(ret, ar.max = 6, ma.max = 6){
 }
 
 
-getAllARMAGARCH = function(ret, ar.max = 6, ma.max = 6, arch.max = 6, 
+getAllARMAGARCH = function(ret, ar.max = 3, ma.max = 3, arch.max = 3, 
                            garch.max = 1, model = "sGARCH"){
 
   table = expand.grid(0:ar.max, 0:ma.max, 0:1, 0:arch.max, 0:garch.max)
@@ -126,7 +126,7 @@ getAllARMAGARCH = function(ret, ar.max = 6, ma.max = 6, arch.max = 6,
 select_model = function(ts){
   
   # Step 1: Calculate all ARMA(p,q) models and consider those fulfilling the LB
-  ARMA = getAllARMA(ts, ar.max = 6, ma.max = 6)
+  ARMA = getAllARMA(ts, ar.max = 3, ma.max = 3)
   ARMA_red = ARMA[which(ARMA$LB > 0.05),]
   
   
@@ -146,7 +146,7 @@ select_model = function(ts){
   
   
   # Step 3: Calculate all ARMA(p,q)-GARCH(P,Q) models and consider those fulfilling LB, WLM
-  ARMA_GARCH = getAllARMAGARCH(ts, ar.max = 6, ma.max = 6, arch.max = 6, garch.max = 1, 
+  ARMA_GARCH = getAllARMAGARCH(ts, ar.max = 3, ma.max = 3, arch.max = 3, garch.max = 1, 
                                model = "sGARCH")
   ARMA_GARCH_red = ARMA_GARCH[which((ARMA_GARCH$LB > 0.05) & (ARMA_GARCH$WLM > 0.05)),]
   
@@ -174,7 +174,7 @@ select_model = function(ts){
   
   # Steps 5: Calculate all possible ARMA(p,q)-GJR-GARCH(P,Q) models and
   #          consider those fulfilling LB, WLM, SB
-  ARMA_GJR_GARCH = getAllARMAGARCH(ts, ar.max = 6, ma.max = 6, arch.max = 6, 
+  ARMA_GJR_GARCH = getAllARMAGARCH(ts, ar.max = 3, ma.max = 3, arch.max = 3, 
                                    garch.max = 1, model = "gjrGARCH")
   idx = apply(ARMA_GJR_GARCH, 1, function(x){all(x[7:12] > 0.05)})
   ARMA_GJR_GARCH_red = ARMA_GJR_GARCH[idx,]
@@ -201,11 +201,12 @@ modXMR = select_model(rXMR)
 modXRP = select_model(rXRP)
 
 # Optimal models:
-# BTC: ARCH(6) with mu
-# ETH: GJR-ARCH(6) without mu
-# LTC: GARCH(1,1) without mu
-# XMR: GARCH(1,1) with mu
-# XRP: GARCH(1,1) without mu
+#      AR  MA  Mean  ARCH  GARCH  GJR
+# BTC:  1   1    0     2    0     TRUE
+# ETH:  0   0    1     3    0     FALSE 
+# LTC:  0   0    0     1    1     FALSE 
+# XMR:  0   0    1     1    1     FALSE
+# XRP:  0   0    0     1    1     FALSE
 
 modSysBTC = select_model(rSysBTC)
 modSysETH = select_model(rSysETH)
@@ -214,8 +215,9 @@ modSysXMR = select_model(rSysXMR)
 modSysXRP = select_model(rSysXRP)
 
 # Optimal models:
-# SysBTC: ARMA(1,1)-GJR-GARCH(6,1) with mu
-# SysETH: GARCH(1,1) with mu
-# SysLTC: AR(1)-GJR-GARCH(5,0) without mu
-# SysXMR: ARMA(1,1)-ARCH(4,0) with mu
-# SysXRP: ARMA(2,2)-GJR-ARCH(3,0) without mu
+#         AR  MA  Mean  ARCH  GARCH  GJR
+# SysBTC:  0   1    0     5     0    TRUE    # p
+# SysETH:  0   0    1     1     1    FALSE
+# SysLTC:  0   0    0     3     0    TRUE    # p
+# SysXMR:  1   1    0     3     0    FALSE
+# SysXRP:  0   0    0     5     0    TRUE    # p

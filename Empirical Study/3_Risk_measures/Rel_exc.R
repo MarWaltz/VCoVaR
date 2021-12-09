@@ -296,7 +296,7 @@ for(i in seq_len(nrow(out_MV))){
            },
            
            "DCC" = {
-             
+
              if(measure == "MCoVaR"){
                MCoVaR_VCoVaR = MCoVaRs_DCC[[CC]]
              }else{

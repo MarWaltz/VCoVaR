@@ -2,7 +2,7 @@
 #      Gold 6136 CPU with 3.00 GHz on a 64-Bit Windows Server 2016 with 24 processors.
 
 #load CC data
-CC_data <- read.csv("C:/Users/MWaltz/Desktop/Forschung/CoVaR/Code/Empirical Study/0_Log_returns/CC_data.csv")
+CC_data <- read.csv("C:/Users/MWaltz/Desktop/Forschung/CoVaR/Code/Empirical Study/0_Log_returns/CC_data_v2.csv")
 
 date_ts = CC_data$date
 

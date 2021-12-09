@@ -13,7 +13,8 @@ MaxMinScale = function(ts){
 col = c("blue3", "cornflowerblue", "green3", "red3", "orange")
 
 # setup axis
-par(mfrow = c(1,2))
+#par(mfrow = c(1,2), font.axis = 2, font.lab = 2)
+par(mfrow = c(1,2), cex.axis = 1.25, cex.lab = 1.25)
 
 year = 2016:2021
 year_sta = paste(year, "01-01", sep = "-")
@@ -21,14 +22,14 @@ year_idx = which(is.element(date_ts, year_sta))
 
 # plot prices
 plot.ts(cbind(MaxMinScale(BTC), MaxMinScale(ETH), MaxMinScale(LTC), MaxMinScale(XMR), MaxMinScale(XRP)), 
-        xaxt = "n", plot.type = "single", col = col, ylab = "Standardized Prices")
+        xaxt = "n", plot.type = "single", col = col, ylab = "Standardized Prices", lwd = 2)
 axis(1, at = year_idx, labels = year)
 legend("topleft", col = col, bty = "n", legend = c("BTC", "ETH", "LTC", "XMR", "XRP"), 
-       border = rep(NA, 4), lty = rep(1, 4), density = rep(0, 4), lwd = 2)
+       border = rep(NA, 4), lty = rep(1, 4), density = rep(0, 4), lwd = 2, cex = 1.25)
 
 # plot returns
 plot.ts(cbind(rBTC, rETH, rLTC, rXMR, rXRP), plot.type = "single", col = col, 
-        ylab = "log-returns", xaxt = "n")
+        ylab = "log-returns", xaxt = "n", lwd = 2)
 axis(1, at = year_idx-1, labels = year)
-legend("top", col = col, bty = "n", legend = c("BTC", "ETH", "LTC", "XMR", "XRP"), 
-       border = rep(NA, 4), lty = rep(1, 4), density = rep(0, 4), lwd = 2)
+#legend("topright", col = col, bty = "n", legend = c("BTC", "ETH", "LTC", "XMR", "XRP"), 
+#       border = rep(NA, 4), lty = rep(1, 4), density = rep(0, 4), lwd = 2, cex = 1.25)
