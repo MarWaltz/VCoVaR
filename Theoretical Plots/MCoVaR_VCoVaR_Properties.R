@@ -102,29 +102,33 @@ M_gumbel05[970:1000] = NA
 M_clayton01[970:1000] = NA
 M_clayton05[970:1000] = NA
 
-#Comparison for 5% level
+
+pdf(file = "Sim_MCoVaR_VCoVaR.pdf", width = 12, height = 6)
 par(mfrow = c(1,2))
-plot(tau, M_clayton05, type = "l", xlim = c(0, 1), ylab = "MCoVaR | VCoVaR", col = "red3", lwd = 2,
-     xlab = expression(tau), lty = 2, ylim = c(-4, -1.5))
-lines(tau, M_gumbel05, col = "blue3", lwd = 2, lty = 2)
-lines(tau, V_clayton05, col = "red3", lwd = 2)
-lines(tau, V_gumbel05, col = "blue3", lwd = 2)
-legend("bottomright", col = rep(c("red3", "blue3"),2), bty = "n", density = rep(0,4), lwd = 2,
+
+#Comparison for 5% level
+plot(tau, M_clayton05, type = "l", xlim = c(0, 1), ylab = "MCoVaR | VCoVaR", col = "red3", lwd = 4,
+     xlab = expression(tau), lty = 2, ylim = c(-4, -1.5), cex.axis = 1.1, cex.lab = 1.1)
+lines(tau, M_gumbel05, col = "blue3", lwd = 4, lty = 2)
+lines(tau, V_clayton05, col = "red3", lwd = 4)
+lines(tau, V_gumbel05, col = "blue3", lwd = 4)
+legend("bottomright", col = rep(c("red3", "blue3"),2), bty = "n", density = rep(0,4), lwd = 3,
        legend = c("MCoVaR: clayton", "MCoVaR: gumbel", "VCoVaR: clayton", "VCoVaR: gumbel"), 
        border = c(NA,NA), lty = c(2,2,1,1))
-mtext(text = expression(paste(alpha, " = ", beta, " = 0.05")))
-abline(h = qnorm(0.05*0.05), lwd = 2, col = "darkgrey", lty = 2)
-abline(h = qnorm(0.05), lwd = 2, col = "darkgrey", lty = 2)
+mtext(text = expression(paste(alpha, " = ", beta, " = 0.05")), cex = 1.25)
+abline(h = qnorm(0.05*0.05), lwd = 4, col = "darkgrey", lty = 2)
+abline(h = qnorm(0.05), lwd = 4, col = "darkgrey", lty = 2)
 
 #Comparison for 1% level
-plot(tau, M_clayton01, type = "l", xlim = c(0, 1), ylab = "MCoVaR | VCoVaR", col = "red3", lwd = 2,
-     xlab = expression(tau), lty = 2, ylim = c(-4, -1.5))
-lines(tau, M_gumbel01, col = "blue3", lwd = 2, lty = 2)
-lines(tau, V_clayton01, col = "red3", lwd = 2)
-lines(tau, V_gumbel01, col = "blue3", lwd = 2)
-legend("topright", col = rep(c("red3", "blue3"),2), bty = "n", density = rep(0,4), lwd = 2,
+plot(tau, M_clayton01, type = "l", xlim = c(0, 1), ylab = "MCoVaR | VCoVaR", col = "red3", lwd = 4,
+     xlab = expression(tau), lty = 2, ylim = c(-4, -1.5), cex.axis = 1.1, cex.lab = 1.1)
+lines(tau, M_gumbel01, col = "blue3", lwd = 4, lty = 2)
+lines(tau, V_clayton01, col = "red3", lwd = 4)
+lines(tau, V_gumbel01, col = "blue3", lwd = 4)
+legend("topright", col = rep(c("red3", "blue3"),2), bty = "n", density = rep(0,4), lwd = 3,
        legend = c("MCoVaR: clayton", "MCoVaR: gumbel", "VCoVaR: clayton", "VCoVaR: gumbel"), 
        border = c(NA,NA), lty = c(2,2,1,1))
-mtext(text = expression(paste(alpha, " = ", beta, " = 0.01")))
-abline(h = qnorm(0.01*0.01), lwd = 2, col = "darkgrey", lty = 2)
-abline(h = qnorm(0.01), lwd = 2, col = "darkgrey", lty = 2)
+mtext(text = expression(paste(alpha, " = ", beta, " = 0.01")), cex = 1.25)
+abline(h = qnorm(0.01*0.01), lwd = 4, col = "darkgrey", lty = 2)
+abline(h = qnorm(0.01), lwd = 4, col = "darkgrey", lty = 2)
+dev.off()

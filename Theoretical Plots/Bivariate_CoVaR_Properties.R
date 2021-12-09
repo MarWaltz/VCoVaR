@@ -112,29 +112,32 @@ for(i in seq_along(theta_Gu)){
 }
 
 #Comparison
+pdf(file = "Sim_Bivariate_CoVaR.pdf", width = 12, height = 6)
 par(mfrow = c(1,2))
 plot(tau, Biv_norm05, type = "l", xlim = c(0, 1), ylab = "CoVaR", col = "black",
-     lwd = 2, xlab = expression(tau))
-lines(tau, Biv_t05, col = "red3", lwd = 2)
-lines(tau, Biv_t_205, col = "blue3", lwd = 2)
-lines(tau, Biv_gumbel05, col = "orange3", lwd = 2)
-lines(tau, Biv_clayton05, col = "green3", lwd = 2)
-abline(h = qnorm(0.05*0.05), lwd = 2, col = "darkgrey", lty = 2)
-abline(h = qnorm(0.05), lwd = 2, col = "darkgrey", lty = 2)
+     lwd = 4, xlab = expression(tau), cex.axis = 1.1, cex.lab = 1.1)
+lines(tau, Biv_t05, col = "red3", lwd = 4)
+lines(tau, Biv_t_205, col = "blue3", lwd = 4)
+lines(tau, Biv_gumbel05, col = "orange3", lwd = 4)
+lines(tau, Biv_clayton05, col = "green3", lwd = 4)
+abline(h = qnorm(0.05*0.05), lwd = 4, col = "darkgrey", lty = 2)
+abline(h = qnorm(0.05), lwd = 4, col = "darkgrey", lty = 2)
 legend("right", col = c("black", "red3", "blue3", "orange3", "green3"), bty = "n",
        legend = c("normal", "t (df = 4)", "t (df = 15)", "gumbel", "clayton"), 
-       border = rep(NA,5), lty = rep(1,5), density = rep(0,5), lwd = 2)
-mtext(text = expression(paste(alpha, " = ", beta, " = 0.05")))
+       border = rep(NA,5), lty = rep(1,5), density = rep(0,5), lwd = 4)
+mtext(text = expression(paste(alpha, " = ", beta, " = 0.05")), cex = 1.25)
+
 
 plot(tau, Biv_norm01, type = "l", xlim = c(0, 1), ylab = "CoVaR", col = "black",
-     lwd = 2, xlab = expression(tau))
-lines(tau, Biv_t01, col = "red3", lwd = 2)
-lines(tau, Biv_t_201, col = "blue3", lwd = 2)
-lines(tau, Biv_gumbel01, col = "orange3", lwd = 2)
-lines(tau, Biv_clayton01, col = "green3", lwd = 2)
-abline(h = qnorm(0.01*0.01), lwd = 2, col = "darkgrey", lty = 2)
-abline(h = qnorm(0.01), lwd = 2, col = "darkgrey", lty = 2)
+     lwd = 4, xlab = expression(tau), cex.axis = 1.1, cex.lab = 1.1)
+lines(tau, Biv_t01, col = "red3", lwd = 4)
+lines(tau, Biv_t_201, col = "blue3", lwd = 4)
+lines(tau, Biv_gumbel01, col = "orange3", lwd = 4)
+lines(tau, Biv_clayton01, col = "green3", lwd = 4)
+abline(h = qnorm(0.01*0.01), lwd = 4, col = "darkgrey", lty = 2)
+abline(h = qnorm(0.01), lwd = 4, col = "darkgrey", lty = 2)
 legend("right", col = c("black", "red3", "blue3", "orange3", "green3"), bty = "n",
        legend = c("normal", "t (df = 4)", "t (df = 15)", "gumbel", "clayton"), 
-       border = rep(NA,5), lty = rep(1,5), density = rep(0,5), lwd = 2)
-mtext(text = expression(paste(alpha, " = ", beta, " = 0.01")))
+       border = rep(NA,5), lty = rep(1,5), density = rep(0,5), lwd = 4)
+mtext(text = expression(paste(alpha, " = ", beta, " = 0.01")), cex = 1.25)
+dev.off()
