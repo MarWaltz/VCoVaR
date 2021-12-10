@@ -119,7 +119,7 @@ plot_VSM_CoVaR = function(name_Y, main = F, width = 12, height = 7){
   MCoVaR = MCoVaRs_t[[name_Y]]
   VCoVaR = VCoVaRs_t[[name_Y]]
   SCoVaR = Biv_CoVaRs_t[[which(grepl("Sys", names(Biv_CoVaRs_t)) & 
-                                 startsWith(names(Biv_CoVaRs_t), "BTC"))]]
+                                 startsWith(names(Biv_CoVaRs_t), name_Y))]]
   ts_X  = ts_CC[-which(names(ts_CC) == name_Y)]
   VaR_X = VaR_CC[-which(names(VaR_CC) == name_Y)]
 
