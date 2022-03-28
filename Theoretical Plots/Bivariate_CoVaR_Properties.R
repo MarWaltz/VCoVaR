@@ -1,6 +1,3 @@
-#Note: The calculations in this script take only a couple of seconds/minutes on an Intel(R) 
-#      Xeon(R) Gold 6136 CPU with 3.00 GHz on a 64-Bit Windows Server 2016 with 24 processors.
-
 library("copula")
 
 ##################################### BIVARIATE COVAR #######################################
