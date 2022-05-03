@@ -2,7 +2,8 @@
 
 This repository contains the source [R](https://www.r-project.org/) code of:
 
-Martin Waltz, Abhay Kumar Singh, Ostap Okhrin (2022). *Vulnerability-CoVaR: Investigating the Crypto-market*.
+Martin Waltz, Abhay Kumar Singh, Ostap Okhrin (2022). Vulnerability-CoVaR: investigating the crypto-market, *Quantitative Finance*, 
+DOI: [10.1080/14697688.2022.2063166](https://www.tandfonline.com/doi/full/10.1080/14697688.2022.2063166)
 
 The used Community Network Data is kindly provided by [CoinMetrics](https://coinmetrics.io/). Please note that no warranties are given for the functionality and correctness of the code.
 
@@ -21,14 +22,13 @@ install.packages("HAC")
 If you use this code in one of your projects or papers, please cite it as follows.
 
 ~~~bibtex
-@misc{2022VCoVaR,
-  author = {Waltz, Martin and Singh, Abhay Kumar and Okhrin, Ostap},
-  title = {Vulnerability-CoVaR: Investigating the Crypto-market},
-  year = {2022},
-  publisher = {GitHub},
-  journal = {GitHub Repository},
-  howpublished = {\url{https://github.com/MarWaltz/VCoVaR}}
+@article{doi:10.1080/14697688.2022.2063166,
+author = {Martin Waltz and Abhay Kumar Singh and Ostap Okhrin},
+title = {Vulnerability-CoVaR: investigating the crypto-market},
+journal = {Quantitative Finance},
+year  = {2022},
+publisher = {Routledge},
+doi = {10.1080/14697688.2022.2063166},
+URL = {https://doi.org/10.1080/14697688.2022.2063166}
 }
 ~~~
-
-Note: This citation will be updated once the paper is published.
