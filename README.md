@@ -1,4 +1,4 @@
-# Author's code to 'Vulnerability-CoVaR: Investigating the Crypto-market'
+# Author's code to 'Vulnerability-CoVaR: investigating the crypto-market'
 
 This repository contains the source [R](https://www.r-project.org/) code of:
 
